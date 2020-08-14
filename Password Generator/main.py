@@ -3,30 +3,42 @@ import string
 import random
 import os
 
-def passwordGen(n):
-    """ Takes in the parameter n strictly greater than  7 representing the number of characters"""
-    
-    if n<7:
-        print("Password length must be greater than or equal to 7")
-        sys.exit(0)
-    
-    password = ''
-    while len(password) < n:
-        digit = random.choice(list(string.digits))
-        lwr = random.choice(list(string.ascii_lowercase))
-        upr = random.choice(list(string.ascii_uppercase))
-        punc = random.choice(list(string.punctuation))
-        ls = [digit, lwr, upr, punc]
-        random.shuffle(ls)
-        if n - len(password) > 4:
-            password += ''.join(ls) 
-        else:
-            password += ''.join(ls[:n - len(password)])
+class Password:
+    def __init__(self):
+        try:
+            a = list(map(lambda a : True if a == 'y' else False, [input("Include upper-case(y/n): "), input("Include lower-case(y/n): "), input("Include numbers(y/n): "), input("Include symbols(y/n): ")]))
+            self.upper = a[0]
+            self.lower = a[1]
+            self.numeric = a[2]
+            self.symbol = a[3]
+            self.length = int(input("Enter length of password : "))
+        except:
+            print("Not a valid input..! ")
+            sys.exit(-1)
+
+    def passwordGen(self):
+        password = ''
+        while len(password) < self.length:
+            ls = []
+            if self.numeric: ls.append(random.choice(list(string.digits)))
+            if self.lower : ls.append(random.choice(list(string.ascii_lowercase)))
+            if self.upper : ls.append(random.choice(list(string.ascii_uppercase)))
+            if self.symbol : ls.append(random.choice(list(string.punctuation)))
+            if not ls: sys.exit(0)
+            random.shuffle(ls)
+            if self.length - len(password) > len(ls):
+                password += ''.join(ls) 
+            else:
+                password += ''.join(ls[:self.length - len(password)])
+
+        return password
+
+gen = Password()
+print(gen.passwordGen())
 
 
-    return password
 
-print(passwordGen(15))
+
 
 
 
