@@ -5,6 +5,7 @@ import os
 
 class Password:
     def __init__(self):
+        """ A class to generate, manipulate random Passwords"""
         try:
             a = list(map(lambda a : True if a == 'y' else False, [input("Include upper-case(y/n): "), input("Include lower-case(y/n): "), input("Include numbers(y/n): "), input("Include symbols(y/n): ")]))
             self.upper = a[0]
@@ -17,6 +18,7 @@ class Password:
             sys.exit(-1)
 
     def passwordGen(self):
+        """ Generates a random password given a length """
         password = ''
         while len(password) < self.length:
             ls = []
